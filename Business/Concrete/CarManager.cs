@@ -15,10 +15,22 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        public void Add(Car car)
+        {
+            //iş kodları
+            _carDal.Add(car);
+        }
+
         public List<Car> GetAll()
         {
             //iş kodları
            return _carDal.GetAll();
+        }
+
+        public Car GetById(int id)
+        {
+            //iş kodları
+            return _carDal.GetById(id);
         }
     }
 }

@@ -14,10 +14,10 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car{Id=1,BrandId=1,ColorId=1,DailyPrice=350,ModelYear=2019,Description="Araba1" },
-                new Car{Id=1,BrandId=2,ColorId=1,DailyPrice=3500,ModelYear=2019,Description="Araba2" },
-                new Car{Id=1,BrandId=3,ColorId=2,DailyPrice=4000,ModelYear=2017,Description="Araba3" },
-                new Car{Id=1,BrandId=4,ColorId=2,DailyPrice=1000,ModelYear=2017,Description="Araba4" }
+                new Car{Id=1,BrandId=1,ColorId=1,DailyPrice=350,ModelYear=2015,Description="Araba1" },
+                new Car{Id=2,BrandId=2,ColorId=2,DailyPrice=400,ModelYear=2016,Description="Araba2" },
+                new Car{Id=3,BrandId=3,ColorId=3,DailyPrice=500,ModelYear=2020,Description="Araba3" },
+                new Car{Id=4,BrandId=4,ColorId=4,DailyPrice=1000,ModelYear=2021,Description="Araba4" }
 
             };
         }
@@ -48,6 +48,7 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.Id = car.Id;
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
+            carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
         }
