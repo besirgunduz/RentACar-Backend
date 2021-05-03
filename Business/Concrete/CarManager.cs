@@ -9,7 +9,7 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;
+        private ICarDal _carDal;
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
@@ -17,20 +17,25 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            //iş kodları
-            _carDal.Add(car);
+            if (car.Description.Length >= 2 && car.DailyPrice > 0)
+            {
+                _carDal.Add(car);
+                Console.WriteLine("Araba eklendi");
+            }
+            else
+            {
+                Console.WriteLine("Araba ekleme başarısız");
+            }
         }
 
-        public List<Car> GetAll()
+        public List<Car> GetCarsByBrandId(int brandId)
         {
-            //iş kodları
-           return _carDal.GetAll();
+            return _carDal.GetAll(c => c.BrandId == brandId);
         }
 
-        public Car GetById(int id)
+        public List<Car> GetCarsByColorId(int colorId)
         {
-            //iş kodları
-            return _carDal.GetById(id);
+            return _carDal.GetAll(c => c.ColorId == colorId);
         }
     }
 }
