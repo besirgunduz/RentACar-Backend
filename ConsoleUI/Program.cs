@@ -15,6 +15,11 @@ namespace ConsoleUI
 
             carManager.Add(new Car { BrandId = 2, ColorId = 1, ModelYear = 2015,DailyPrice=290,Description="X" });
 
+            foreach (var car in carManager.GetCarsByBrandId(1))
+            {
+                Console.WriteLine(car.Description);
+            }
+
      
 
             Console.WriteLine("----------------------------------------------------------------------");
