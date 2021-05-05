@@ -9,23 +9,38 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        private ICarDal _carDal;
+        ICarDal _carDal;
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public void Add(Car entity)
         {
-            if (car.Description.Length >= 2 && car.DailyPrice > 0)
+            if (entity.Description.Length >= 2 && entity.DailyPrice > 0)
             {
-                _carDal.Add(car);
+                _carDal.Add(entity);
                 Console.WriteLine("Araba eklendi");
             }
             else
             {
                 Console.WriteLine("Araba ekleme başarısız");
             }
+        }
+
+        public void Delete(Car entity)
+        {
+            _carDal.Delete(entity);
+        }
+
+        public List<Car> GetAll()
+        {
+            return _carDal.GetAll();
+        }
+
+        public Car GetById(int id)
+        {
+            return _carDal.Get(a => a.Id == id);
         }
 
         public List<Car> GetCarsByBrandId(int brandId)
@@ -36,6 +51,11 @@ namespace Business.Concrete
         public List<Car> GetCarsByColorId(int colorId)
         {
             return _carDal.GetAll(c => c.ColorId == colorId);
+        }
+
+        public void Update(Car entity)
+        {
+            _carDal.Update(entity);
         }
     }
 }
