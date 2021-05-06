@@ -14,14 +14,21 @@ namespace ConsoleUI
             Console.WriteLine("------------------------------------------------------------------------");
 
             //GetCarsByColorId(carManager);
+            //Add(carManager);
+            //GelAll(carManager);
 
-            carManager.Add(new Car { ColorId = 1, BrandId = 1, DailyPrice = 100, ModelYear = 200, Description = "Fiat" });
-            Console.WriteLine("Araba eklendi. ");
-            GelAll(carManager);
-
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine($"CarName : {car.CarName} BrandName : {car.BrandName} ColorName : {car.ColorName} DailyPrice : {car.DailyPrice}");
+            }
 
             Console.WriteLine("----------------------------------------------------------------------");
             Console.ReadKey();
+        }
+
+        private static void Add(CarManager carManager)
+        {
+            carManager.Add(new Car { ColorId = 1, BrandId = 1, DailyPrice = 100, ModelYear = 200, Description = "Fiat" });
         }
 
         private static void GetCarsByColorId(CarManager carManager)
