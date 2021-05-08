@@ -17,10 +17,12 @@ namespace ConsoleUI
             //Add(carManager);
             //GelAll(carManager);
 
-            foreach (var car in carManager.GetCarDetails())
+            foreach (var car in carManager.GetCarDetails().Data)
             {
                 Console.WriteLine($"CarName : {car.CarName} BrandName : {car.BrandName} ColorName : {car.ColorName} DailyPrice : {car.DailyPrice}");
             }
+
+            Console.WriteLine(carManager.GetCarDetails().Message);
 
             Console.WriteLine("----------------------------------------------------------------------");
             Console.ReadKey();
@@ -33,7 +35,7 @@ namespace ConsoleUI
 
         private static void GetCarsByColorId(CarManager carManager)
         {
-            foreach (var car in carManager.GetCarsByColorId(1))
+            foreach (var car in carManager.GetCarsByColorId(1).Data)
             {
                 Console.WriteLine($"{car.Id}---{car.ModelYear}---{car.DailyPrice}---{car.Description}---{car.BrandId}---{car.ColorId}");
             }
@@ -41,7 +43,7 @@ namespace ConsoleUI
 
         private static void GelAll(CarManager carManager)
         {
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine($"{car.Id}---{car.ModelYear}---{car.DailyPrice}---{car.Description}---{car.BrandId}---{car.ColorId}");
             }
