@@ -23,11 +23,11 @@ namespace Business.Concrete
             if (entity.Description.Length >= 2 && entity.DailyPrice > 0)
             {
                 _carDal.Add(entity);
-                return new SuccessResult(Messages.CarNameOrDailyPriceInValid);
+                return new SuccessResult(Messages.CarAdded);
             }
             else
             {
-                return new ErrorResult(Messages.CarAdded);
+                return new ErrorResult(Messages.CarNameOrDailyPriceInValid);
             }
         }
 
