@@ -11,14 +11,22 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             UserManager userManager = new UserManager(new EfUserDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            userManager.Add(new User { FirstName = "Beşir", LastName = "Gündüz", Email = "besirgunduz1993@gmail.com", Password = "123" });
-            Console.WriteLine("Kullanıcı eklendi");
+            rentalManager.Add(new Rental { CarId = 1, CustomerId = 2, RentDate = DateTime.Now,ReturnDate=DateTime.Now.AddDays(7)}); //Aracı 7 gün kiralamak istiyorum.
 
             //GetCarsByColorId(carManager);
             //GelAll(carManager);
             //GetCarDetais(carManager);
             //AddCar(carManager);
+
+            //userManager.Add(new User { FirstName = "Beşir", LastName = "Gündüz", Email = "besirgunduz1993@gmail.com", Password = "123" });
+            //customerManager.Add(new Customer { UserId = 1, CompanyName = "Lc Waikiki" });
+            //customerManager.Add(new Customer { UserId = 1, CompanyName = "Taha Giyim" });
+
+
+
 
             Console.ReadKey();
         }

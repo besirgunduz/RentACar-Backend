@@ -17,7 +17,21 @@ namespace Business.Concrete
 
         public void Add(Rental entity)
         {
-            _rentalDal.Add(entity);
+            // Kiralamak istediğimiz araç daha önce hiç kiralanmadıysa kiralayabilecez
+            // Kiralamak istediğimiz araç daha önce kiralandıysa, kiralamak istediğimiz tarih aracın teslim tarihinden büyük olması gerekiyor
+
+            var isRental = _rentalDal.Get(c => c.CarId == entity.CarId);//araç daha önce kiranmış mı?
+
+            if (isRental==null || entity.RentDate>isRental.ReturnDate)
+            {
+                _rentalDal.Add(entity);
+                Console.WriteLine("Araç kiralandı");
+            }
+            else
+            {
+                Console.WriteLine("Araç başkası tarafından kullanılmaktadır.");
+            }
+
         }
 
         public void Delete(Rental entity)
