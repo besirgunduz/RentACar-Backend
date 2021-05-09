@@ -14,8 +14,13 @@ namespace ConsoleUI
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            rentalManager.Add(new Rental { CarId = 1, CustomerId = 2, RentDate = DateTime.Now,ReturnDate=DateTime.Now.AddDays(7)}); //Aracı 7 gün kiralamak istiyorum.
+            //rentalManager.Add(new Rental { CarId = 1, CustomerId = 2, RentDate = DateTime.Now,ReturnDate=DateTime.Now.AddDays(7)}); //Aracı 7 gün kiralamak istiyorum.
 
+            foreach (var rental in rentalManager.GetAll())
+            {
+                Console.WriteLine($"{rental.Id}-{rental.CarId}-{rental.CustomerId}-{rental.RentDate}-{rental.ReturnDate}");
+            }
+            
             //GetCarsByColorId(carManager);
             //GelAll(carManager);
             //GetCarDetais(carManager);

@@ -15,14 +15,12 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        // Kiralamak istediğimiz araç daha önce hiç kiralanmadıysa veya kiralamak istediğimiz tarih aracın teslim tarihinden büyük olması gerekiyor.
         public void Add(Rental entity)
         {
-            // Kiralamak istediğimiz araç daha önce hiç kiralanmadıysa kiralayabilecez
-            // Kiralamak istediğimiz araç daha önce kiralandıysa, kiralamak istediğimiz tarih aracın teslim tarihinden büyük olması gerekiyor
+            var isRental = _rentalDal.Get(c => c.CarId == entity.CarId);
 
-            var isRental = _rentalDal.Get(c => c.CarId == entity.CarId);//araç daha önce kiranmış mı?
-
-            if (isRental==null || entity.RentDate>isRental.ReturnDate)
+            if (isRental == null || entity.RentDate > isRental.ReturnDate)
             {
                 _rentalDal.Add(entity);
                 Console.WriteLine("Araç kiralandı");
@@ -42,6 +40,11 @@ namespace Business.Concrete
         public List<Rental> GetAll()
         {
             return _rentalDal.GetAll();
+        }
+
+        public Rental GetById(int id)
+        {
+            return _rentalDal.Get(r => r.Id == id);
         }
 
         public void Update(Rental entity)

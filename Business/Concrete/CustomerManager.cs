@@ -30,6 +30,11 @@ namespace Business.Concrete
             return _customerDal.GetAll();
         }
 
+        public Customer GetById(int id)
+        {
+            return _customerDal.Get(c => c.Id == id);
+        }
+
         public void Update(Customer entity)
         {
             _customerDal.Update(entity);
