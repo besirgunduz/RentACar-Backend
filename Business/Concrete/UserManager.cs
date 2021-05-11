@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,29 +17,68 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public void Add(User entity)
+        public IResult Add(User entity)
         {
-            _userDal.Add(entity);
+            try
+            {
+                _userDal.Add(entity);
+                return new SuccessResult(Messages.Added);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public void Delete(User entity)
+        public IResult Delete(User entity)
         {
-            _userDal.Delete(entity);
+            try
+            {
+                _userDal.Delete(entity);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public List<User> GetAll()
+        public IDataResult<List<User>> GetAll()
         {
-            return _userDal.GetAll();
+            try
+            {
+                return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.Listed);
+            }
+            catch
+            {
+
+                return new ErrorDataResult<List<User>>(Messages.Error);
+            }
         }
 
-        public User GetById(int id)
+        public IDataResult<User> GetById(int id)
         {
-           return _userDal.Get(u => u.Id == id);
+            try
+            {
+                return new SuccessDataResult<User>(_userDal.Get(b => b.Id == id), Messages.Listed);
+            }
+            catch
+            {
+                return new ErrorDataResult<User>(Messages.Error);
+            }
         }
 
-        public void Update(User entity)
+        public IResult Update(User entity)
         {
-            _userDal.Update(entity);
+            try
+            {
+                _userDal.Update(entity);
+                return new SuccessResult(Messages.Updated);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
     }
 }

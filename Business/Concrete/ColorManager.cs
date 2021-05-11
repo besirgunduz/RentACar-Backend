@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,29 +17,68 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void Add(Color entity)
+        public IResult Add(Color entity)
         {
-            _colorDal.Add(entity);
+            try
+            {
+                _colorDal.Add(entity);
+                return new SuccessResult(Messages.Added);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public void Delete(Color entity)
+        public IResult Delete(Color entity)
         {
-            _colorDal.Delete(entity);
+            try
+            {
+                _colorDal.Delete(entity);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            try
+            {
+                return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.Listed);
+            }
+            catch
+            {
+
+                return new ErrorDataResult<List<Color>>(Messages.Error);
+            }
         }
 
-        public Color GetById(int id)
+        public IDataResult<Color> GetById(int id)
         {
-            return _colorDal.Get(c => c.Id == id);
+            try
+            {
+                return new SuccessDataResult<Color>(_colorDal.Get(b => b.Id == id), Messages.Listed);
+            }
+            catch
+            {
+                return new ErrorDataResult<Color>(Messages.Error);
+            }
         }
 
-        public void Update(Color entity)
+        public IResult Update(Color entity)
         {
-            _colorDal.Update(entity);
+            try
+            {
+                _colorDal.Update(entity);
+                return new SuccessResult(Messages.Updated);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,29 +17,68 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
-        public void Add(Customer entity)
+        public IResult Add(Customer entity)
         {
-            _customerDal.Add(entity);
+            try
+            {
+                _customerDal.Add(entity);
+                return new SuccessResult(Messages.Added);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public void Delete(Customer entity)
+        public IResult Delete(Customer entity)
         {
-            _customerDal.Delete(entity);
+            try
+            {
+                _customerDal.Delete(entity);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public List<Customer> GetAll()
+        public IDataResult<List<Customer>> GetAll()
         {
-            return _customerDal.GetAll();
+            try
+            {
+                return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.Listed);
+            }
+            catch
+            {
+
+                return new ErrorDataResult<List<Customer>>(Messages.Error);
+            }
         }
 
-        public Customer GetById(int id)
+        public IDataResult<Customer> GetById(int id)
         {
-            return _customerDal.Get(c => c.Id == id);
+            try
+            {
+                return new SuccessDataResult<Customer>(_customerDal.Get(b => b.Id == id), Messages.Listed);
+            }
+            catch
+            {
+                return new ErrorDataResult<Customer>(Messages.Error);
+            }
         }
 
-        public void Update(Customer entity)
+        public IResult Update(Customer entity)
         {
-            _customerDal.Update(entity);
+            try
+            {
+                _customerDal.Update(entity);
+                return new SuccessResult(Messages.Updated);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
     }
 }

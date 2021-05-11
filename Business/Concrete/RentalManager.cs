@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,41 +17,73 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        // Kiralamak istediğimiz araç daha önce hiç kiralanmadıysa veya kiralamak istediğimiz tarih aracın teslim tarihinden büyük olması gerekiyor.
-        public void Add(Rental entity)
+        // Kiralamak istediğimiz araç daha önce hiç kiralanmadıysa(yani kiralama tablosunda kaydı yoksa) veya 
+        // Kiralamak istediğimiz tarih aracın teslim tarihinden büyük ise aracı kiralayabilecez.
+        public IResult Add(Rental entity)
         {
             var isRental = _rentalDal.Get(c => c.CarId == entity.CarId);
 
             if (isRental == null || entity.RentDate > isRental.ReturnDate)
             {
                 _rentalDal.Add(entity);
-                Console.WriteLine("Araç kiralandı");
+                return new SuccessResult(Messages.Added);
             }
             else
             {
-                Console.WriteLine("Araç başkası tarafından kullanılmaktadır.");
+                return new ErrorResult(Messages.Error);
             }
 
         }
 
-        public void Delete(Rental entity)
+        public IResult Delete(Rental entity)
         {
-            _rentalDal.Delete(entity);
+            try
+            {
+                _rentalDal.Delete(entity);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
 
-        public List<Rental> GetAll()
+        public IDataResult<List<Rental>> GetAll()
         {
-            return _rentalDal.GetAll();
+            try
+            {
+                return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.Listed);
+            }
+            catch
+            {
+
+                return new ErrorDataResult<List<Rental>>(Messages.Error);
+            }
         }
 
-        public Rental GetById(int id)
+        public IDataResult<Rental> GetById(int id)
         {
-            return _rentalDal.Get(r => r.Id == id);
+            try
+            {
+                return new SuccessDataResult<Rental>(_rentalDal.Get(b => b.Id == id), Messages.Listed);
+            }
+            catch
+            {
+                return new ErrorDataResult<Rental>(Messages.Error);
+            }
         }
 
-        public void Update(Rental entity)
+        public IResult Update(Rental entity)
         {
-            _rentalDal.Update(entity);
+            try
+            {
+                _rentalDal.Update(entity);
+                return new SuccessResult(Messages.Updated);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
         }
     }
 }
