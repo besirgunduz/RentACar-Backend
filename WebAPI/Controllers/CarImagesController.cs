@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,7 @@ namespace WebAPI.Controllers
             var result = _carImageService.GetAll();
             return Ok(result);
         }
-
+        [ValidationAspect(typeof(CarImageValidator))]
         [HttpPost("Add")]
         public IActionResult Add(CarImage carImage)
         {
