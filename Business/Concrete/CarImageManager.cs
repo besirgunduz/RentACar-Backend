@@ -22,7 +22,7 @@ namespace Business.Concrete
         public IResult Add(CarImage entity)
         {
             var result = BusinessRules.Run(CheckIfCarImagePathExists(entity));
-            if (result!=null)
+            if (result != null)
             {
                 return result;
             }
@@ -45,6 +45,33 @@ namespace Business.Concrete
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.Listed);
+        }
+
+        public IResult Delete(CarImage entity)
+        {
+            try
+            {
+                _carImageDal.Delete(entity);
+                return new SuccessResult(Messages.Deleted);
+            }
+            catch
+            {
+                return new ErrorResult(Messages.Error);
+            }
+        }
+
+        public IResult Update(CarImage entity)
+        {
+            try
+            {
+                _carImageDal.Update(entity);
+                return new SuccessResult(Messages.Updated);
+            }
+            catch
+            {
+
+                return new ErrorResult(Messages.Error);
+            }
         }
     }
 }
