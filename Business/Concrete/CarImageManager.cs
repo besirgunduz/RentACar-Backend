@@ -21,14 +21,25 @@ namespace Business.Concrete
 
         public IResult Add(CarImage entity)
         {
-            var result = BusinessRules.Run(CheckIfCarImagePathExists(entity));
+            var result = BusinessRules.Run(CheckIfCarImagePathExists(entity), CheckIfCarImageCount(entity));
             if (result != null)
             {
                 return result;
             }
-
+            entity.Date = DateTime.Now;
             _carImageDal.Add(entity);
             return new SuccessResult(Messages.Added);
+        }
+
+        private IResult CheckIfCarImageCount(CarImage entity)
+        {
+            var result = _carImageDal.GetAll(ci => ci.CarId == entity.CarId).Count;
+            if (result>=5)
+            {
+                return new ErrorResult("Hata...Bir arabanın en fazla 5 resmi olabilir.");
+            }
+
+            return new SuccessResult();
         }
 
         private IResult CheckIfCarImagePathExists(CarImage entity)
