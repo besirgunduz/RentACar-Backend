@@ -44,7 +44,15 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImage>> GetAll()
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.Listed);
+            try
+            {
+                return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.Listed);
+            }
+            catch
+            {
+
+                return new ErrorDataResult<List<CarImage>>(Messages.Error);
+            }
         }
 
         public IResult Delete(CarImage entity)
