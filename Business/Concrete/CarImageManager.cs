@@ -92,5 +92,17 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.Error);
             }
         }
+
+        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
+        {
+            try
+            {
+                return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(ci=>ci.CarId==carId), Messages.Listed);
+            }
+            catch
+            {
+                return new ErrorDataResult<List<CarImage>>(Messages.Error);
+            }
+        }
     }
 }

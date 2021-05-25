@@ -12,5 +12,6 @@ namespace Business.Abstract
         IResult Add(CarImage entity);
         IResult Delete(CarImage entity);
         IResult Update(CarImage entity);
+        IDataResult<List<CarImage>> GetAllByCarId(int carId);
     }
 }
