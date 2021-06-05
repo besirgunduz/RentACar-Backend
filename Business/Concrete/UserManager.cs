@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -15,68 +16,19 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public IResult Add(User entity)
+        public void Add(User entity)
         {
-            try
-            {
-                _userDal.Add(entity);
-                return new SuccessResult(Messages.Added);
-            }
-            catch
-            {
-                return new ErrorResult(Messages.Error);
-            }
+            _userDal.Add(entity);
         }
 
-        public IResult Delete(User entity)
+        public User GetByMail(string mail)
         {
-            try
-            {
-                _userDal.Delete(entity);
-                return new SuccessResult(Messages.Deleted);
-            }
-            catch
-            {
-                return new ErrorResult(Messages.Error);
-            }
+            return _userDal.Get(u => u.Email == mail);
         }
 
-        public IDataResult<List<User>> GetAll()
+        public List<OperationClaim> GetClaims(User user)
         {
-            try
-            {
-                return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.Listed);
-            }
-            catch
-            {
-
-                return new ErrorDataResult<List<User>>(Messages.Error);
-            }
-        }
-
-        public IDataResult<User> GetById(int id)
-        {
-            try
-            {
-                return new SuccessDataResult<User>(_userDal.Get(b => b.Id == id), Messages.Listed);
-            }
-            catch
-            {
-                return new ErrorDataResult<User>(Messages.Error);
-            }
-        }
-
-        public IResult Update(User entity)
-        {
-            try
-            {
-                _userDal.Update(entity);
-                return new SuccessResult(Messages.Updated);
-            }
-            catch
-            {
-                return new ErrorResult(Messages.Error);
-            }
+            return _userDal.GetClaims(user);
         }
     }
 }
