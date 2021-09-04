@@ -6,9 +6,6 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace Business.Concrete
 {

@@ -15,8 +15,6 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        // Kiralamak istediğimiz araç daha önce hiç kiralanmadıysa(yani kiralama tablosunda kaydı yoksa) veya 
-        // Kiralamak istediğimiz tarih aracın teslim tarihinden büyük ise aracı kiralayabilecez.
         public IResult Add(Rental entity)
         {
             var isRental = _rentalDal.Get(c => c.CarId == entity.CarId);

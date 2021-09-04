@@ -11,5 +11,8 @@
 
         public static string CarNameOrDailyPriceInValid = "Araba ismi veya ücreti geçersiz.";
         public static string CarDetailsList = "Araba detayları listelendi";
+
+        public static string AuthorizationDenied = "Yetkilendirme Reddedildi";
+
     }
 }
