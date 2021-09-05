@@ -2,6 +2,7 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,6 +21,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Product.Add")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")] ////Get ile başlayan metottaki bütün cacheleri siler
         public IResult Add(Car entity)
         {
             _carDal.Add(entity);
@@ -38,7 +40,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.Error);
             }
         }
-
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             try
