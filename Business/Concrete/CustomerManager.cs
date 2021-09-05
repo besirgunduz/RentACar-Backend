@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Transaction;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -80,6 +81,16 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.Error);
             }
+        }
+        [TransactionScopeAspect]
+        public IResult TransactionalTest(Customer entity)
+        {
+            //Transaction => Tutarlılığı sağlamak için kullanılır. Herhangi bir hata ile karşılaşırsa işlemi geri alır. 
+
+            _customerDal.Update(entity);
+            _customerDal.Add(entity);
+
+            return new SuccessResult();
         }
     }
 }

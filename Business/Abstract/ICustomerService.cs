@@ -11,5 +11,7 @@ namespace Business.Abstract
         IResult Add(Customer entity);
         IResult Update(Customer entity);
         IResult Delete(Customer entity);
+        IResult TransactionalTest(Customer entity);
+        
     }
 }
